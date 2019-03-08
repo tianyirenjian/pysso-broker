@@ -58,7 +58,7 @@ class Broker
                 $this->attributes = json_decode($response->getBody()->getContents());
                 return true;
             } else {
-                $this->redirectUrl($this->serverUrl() . '?service=' . $this->getCurrentUrl());
+                $this->redirectUrl($this->serverUrl() . '?service=' . $this->getCurrentUrl(false));
             }
         } else {
             $this->redirectUrl($this->serverUrl() . '?service=' . $this->getCurrentUrl());
@@ -102,7 +102,7 @@ class Broker
             . ($this->server_port ? ':' . $this->server_port : '') . '/logout';
     }
 
-    private function getCurrentUrl()
+    private function getCurrentUrl($query = true)
     {
         if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on'){
             $current_url='https://' . $_SERVER['SERVER_NAME'];
@@ -116,6 +116,10 @@ class Broker
             }
         }
         $current_url .= $_SERVER['REQUEST_URI'];
+        if (!$query) {
+            $current_url_array = explode('?', $current_url);
+            $current_url = $current_url_array[0];
+        }
         return $current_url;
     }
 
