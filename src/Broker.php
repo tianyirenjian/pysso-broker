@@ -43,7 +43,7 @@ class Broker
             $ticket = $_GET['st'];
             $ticket_array = explode('/', $ticket);
             if (count($ticket_array) != 2) {
-                return redirect($this->serverUrl() . '?service=' . $this->getCurrentUrl());
+                return redirectUrl($this->serverUrl() . '?service=' . $this->getCurrentUrl());
             }
             $this->sid = $ticket_array[1];
             $client = new Client([
@@ -58,19 +58,19 @@ class Broker
                 $this->attributes = json_decode($response->getBody()->getContents());
                 return true;
             } else {
-                return redirect($this->serverUrl() . '?service=' . $this->getCurrentUrl());
+                return redirectUrl($this->serverUrl() . '?service=' . $this->getCurrentUrl());
             }
         } else {
-            return redirect($this->serverUrl() . '?service=' . $this->getCurrentUrl());
+            return redirectUrl($this->serverUrl() . '?service=' . $this->getCurrentUrl());
         }
     }
 
     public function logout($service = null)
     {
         if ($service) {
-            return redirect($this->LogoutUrl() . '?service=' . $service);
+            return redirectUrl($this->LogoutUrl() . '?service=' . $service);
         }
-        return redirect($this->LogoutUrl());
+        return redirectUrl($this->LogoutUrl());
     }
 
     public function getAttributes()
@@ -117,5 +117,11 @@ class Broker
         }
         $current_url .= $_SERVER['REQUEST_URI'];
         return $current_url;
+    }
+
+    private function redirectUrl($url)
+    {
+        header('Location:' . $url);
+        exit;
     }
 }
