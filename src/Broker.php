@@ -43,7 +43,7 @@ class Broker
             $ticket = $_GET['st'];
             $ticket_array = explode('/', $ticket);
             if (count($ticket_array) != 2) {
-                redirectUrl($this->serverUrl() . '?service=' . $this->getCurrentUrl());
+                $this->redirectUrl($this->serverUrl() . '?service=' . $this->getCurrentUrl());
             }
             $this->sid = $ticket_array[1];
             $client = new Client([
@@ -58,19 +58,19 @@ class Broker
                 $this->attributes = json_decode($response->getBody()->getContents());
                 return true;
             } else {
-                redirectUrl($this->serverUrl() . '?service=' . $this->getCurrentUrl());
+                $this->redirectUrl($this->serverUrl() . '?service=' . $this->getCurrentUrl());
             }
         } else {
-            redirectUrl($this->serverUrl() . '?service=' . $this->getCurrentUrl());
+            $this->redirectUrl($this->serverUrl() . '?service=' . $this->getCurrentUrl());
         }
     }
 
     public function logout($service = null)
     {
         if ($service) {
-            redirectUrl($this->LogoutUrl() . '?service=' . $service);
+            $this->redirectUrl($this->LogoutUrl() . '?service=' . $service);
         }
-        redirectUrl($this->LogoutUrl());
+        $this->redirectUrl($this->LogoutUrl());
     }
 
     public function getAttributes()
