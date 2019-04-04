@@ -61,7 +61,7 @@ class Broker
                 $this->redirectUrl($this->serverUrl() . '?service=' . $this->getCurrentUrl(false));
             }
         } else {
-            $this->redirectUrl($this->serverUrl() . '?service=' . $this->getCurrentUrl());
+            $this->redirectUrl($this->serverUrl() . '?service=' . $this->getCurrentUrl(false));
         }
     }
 
